@@ -1,15 +1,26 @@
 ---
+
+- name: install FreeIPA Client packages
+  tags:
+    - ipaclient
+  yum: name=freeipa-client,freeipa-admintools,python-memcached
+  when: ansible_distribution == 'Fedora'
+
+
+
 - name: Install IPA Client packages
   tags:
     - ipaclient
   yum: name=ipa-client,ipa-admintools,python-memcached
        state=present
+  when: ansible_distribution == "RedHat"  or ansible_distribution == 'CentOS'
+
 
 - name: Setup resolv.conf
   tags:
     - ipaclient
   template: src=resolv.conf.j2
-            dest=/etc/resolv.conf
+	    dest=/etc/resolv.conf
 
 - name: Register IPA Client
   tags:

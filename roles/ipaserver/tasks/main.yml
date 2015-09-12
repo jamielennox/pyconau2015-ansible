@@ -1,22 +1,30 @@
 ---
-- name: install ipa packages
+
+- name: install freeipa packages
   tags:
     - ipaserver
   yum: name={{ item }} state=present
   with_items:
     - bind-dyndb-ldap
-    - ipa-server
     - firewalld
+    - freeipa-server
+    - bind-pkcs11
+    - bind-pkcs11-utils
+  when: ansible_distribution == 'Fedora'
 
-- name: ipa extra packages
+
+- name: ipa packages
   tags:
     - ipaserver
   yum: name={{ item }} state=present
   with_items:
+    - bind-dyndb-ldap
+    - firewalld
+    - ipa-server
     - bind-pkcs11
     - bind-pkcs11-utils
     - ipa-server-dns
-  when: ansible_distribution == "RedHat"
+  when: ansible_distribution == "RedHat"  or ansible_distribution == 'CentOS'
 
 - name: install ipa
   tags:
@@ -47,16 +55,16 @@
   tags:
     - ipaserver
   service: enabled=yes
-           state=started
-           name=firewalld
+	   state=started
+	   name=firewalld
 
 - name: Open Firewall for services
   tags:
     - ipaserver
   firewalld: service={{ item }}
-             permanent=true
-             state=enabled
-             immediate=yes
+	     permanent=true
+	     state=enabled
+	     immediate=yes
   with_items:
     - http
     - https
@@ -71,9 +79,9 @@
   tags:
     - ipaserver
   firewalld: port={{ item }}
-             permanent=true
-             state=enabled
-             immediate=yes
+	     permanent=true
+	     state=enabled
+	     immediate=yes
   with_items:
     - 9180/tcp
     - 9443-9446/tcp

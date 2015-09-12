@@ -61,7 +61,7 @@
     - ecp
     - websso
 
-- name: Install Ipsilon
+- name: Install Ipsilon Client
   tags:
     - ipsilon
   shell: >
