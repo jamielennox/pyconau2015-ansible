@@ -4,6 +4,10 @@
     - common
   selinux: state=disabled
 
+- name: Enable yum for Fedora
+  command: dnf install yum-utils -y
+  when: ansible_distribution == "Fedora" and ansible_distribution_major_version == "22"
+
 - name: Install repos
   tags:
     - common
