@@ -55,16 +55,16 @@
   tags:
     - ipaserver
   service: enabled=yes
-	   state=started
-	   name=firewalld
+           state=started
+           name=firewalld
 
 - name: Open Firewall for services
   tags:
     - ipaserver
   firewalld: service={{ item }}
-	     permanent=true
-	     state=enabled
-	     immediate=yes
+             permanent=true
+             state=enabled
+             immediate=yes
   with_items:
     - http
     - https
@@ -79,9 +79,9 @@
   tags:
     - ipaserver
   firewalld: port={{ item }}
-	     permanent=true
-	     state=enabled
-	     immediate=yes
+             permanent=true
+             state=enabled
+             immediate=yes
   with_items:
     - 9180/tcp
     - 9443-9446/tcp

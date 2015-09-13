@@ -20,7 +20,7 @@
   tags:
     - ipaclient
   template: src=resolv.conf.j2
-	    dest=/etc/resolv.conf
+            dest=/etc/resolv.conf
 
 - name: Register IPA Client
   tags:
